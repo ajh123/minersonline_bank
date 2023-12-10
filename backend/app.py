@@ -45,7 +45,7 @@ def login():
     data = request.get_json()
 
     user = data_engine.find_user(email=data["email"])
-    if data["password"] == user.password:
+    if user and data["password"] == user.password:
         user_id = user.user_id
         jwt_token = generate_jwt_token(user_id)
         return jsonify({"message": "Login successful", "jwt_token": jwt_token}), 200
@@ -141,12 +141,7 @@ def make_transaction():
 def view_messages():
     user_id = authenticate_user()
     if user_id:
-        user_accounts = data_engine.find_user_accounts(user_id)
-        messages = []
-
-        for account in user_accounts:
-            messages.extend([{"from": message.from_id, "data": message.data} for message in account.messages])
-
+        messages = data_engine.get_messages(user_id)
         return jsonify({"messages": messages})
 
     return jsonify({"error": "User not authenticated"}), 401

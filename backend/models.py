@@ -14,19 +14,35 @@ class Balance:
             "currency_id": self.currency_id,
             "balance": self.balance
         }
+    
+
+class OwnerType:
+    def __init__(self, owner_type: str, owner_id: str):
+        self.type = owner_type
+        self.owner_id = owner_id
+
+    @classmethod
+    def from_json(cls, data):
+        return cls(data.get("type", ""), data.get("owner_id", ""))
+
+    def to_json(self):
+        return {
+            "type": self.type,
+            "owner_id": self.owner_id
+        }
 
 class Message:
-    def __init__(self, from_id: str, data: str):
-        self.from_id = from_id
+    def __init__(self, owner: OwnerType, data: str):
+        self.owner = owner
         self.data = data
 
     @classmethod
     def from_json(cls, data):
-        return cls(data["from"], data["data"])
+        return cls(OwnerType.from_json(data.get("from", {})), data["data"])
 
     def to_json(self):
         return {
-            "from": self.from_id,
+            "owner": self.owner.to_json(),
             "data": self.data
         }
 
@@ -93,21 +109,6 @@ class Transaction:
                 "previous_balance": self.previous_balance,
                 "new_balance": self.new_balance
             }
-        }
-
-class OwnerType:
-    def __init__(self, owner_type: str, owner_id: str):
-        self.type = owner_type
-        self.owner_id = owner_id
-
-    @classmethod
-    def from_json(cls, data):
-        return cls(data.get("type", ""), data.get("owner_id", ""))
-
-    def to_json(self):
-        return {
-            "type": self.type,
-            "owner_id": self.owner_id
         }
 
 class User:

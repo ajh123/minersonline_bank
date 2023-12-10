@@ -68,7 +68,10 @@
                     ],
                     "messages": [
                         {
-                            "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                            "from": {
+                                "type": "bank",
+                                "owner_id": "f23b57bf-78ed-4538-80df-ffd089a27223"
+                            },
                             "data": "hello world!"
                         }
                     ],
@@ -108,7 +111,10 @@
                     ],
                     "messages": [
                         {
-                            "from": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
+                            "from": {
+                                "type": "user",
+                                "owner_id": "f0b53f86-7988-4b27-aad9-ccb4c6752b13"
+                            },
                             "data": "hello my bank!"
                         }
                     ],

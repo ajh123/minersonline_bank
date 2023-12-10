@@ -89,6 +89,6 @@ class MainFrame(ttk.Frame):
             self.messages_listbox.delete(0, tk.END)
 
             for message in messages:
-                self.messages_listbox.insert(tk.END, f"{message['from']}: {message['data']}")
+                self.messages_listbox.insert(tk.END, f"{message['owner']['owner_id']}: {message['data']}")
         else:
             self.messages_listbox.insert(tk.END, "Failed to retrieve messages.")
