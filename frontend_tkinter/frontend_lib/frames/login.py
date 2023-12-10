@@ -9,7 +9,7 @@ class LoginFrame(ttk.Frame):
 
     def __init__(self, container):
         super().__init__(container)
-        self.username_var = tk.StringVar()
+        self.email_var = tk.StringVar()
         self.password_var = tk.StringVar()
         self.error_var = tk.StringVar()
         self.create_widgets()
@@ -23,8 +23,8 @@ class LoginFrame(ttk.Frame):
         login_frame.grid_columnconfigure(0, weight=1)
         login_frame.grid_columnconfigure(4, weight=1)
 
-        ttk.Label(login_frame, text="Username:").grid(row=1, column=1, padx=5, pady=5)
-        ttk.Entry(login_frame, textvariable=self.username_var).grid(row=1, column=2, padx=5, pady=5)
+        ttk.Label(login_frame, text="Email:").grid(row=1, column=1, padx=5, pady=5)
+        ttk.Entry(login_frame, textvariable=self.email_var).grid(row=1, column=2, padx=5, pady=5)
 
         ttk.Label(login_frame, text="Password:").grid(row=2, column=1, padx=5, pady=5)
         ttk.Entry(login_frame, textvariable=self.password_var, show="*").grid(row=2, column=2, padx=5, pady=5)
@@ -34,9 +34,9 @@ class LoginFrame(ttk.Frame):
         login_frame.pack(fill="both", expand=1, anchor=tk.CENTER)
 
     def login(self):
-        username = self.username_var.get()
+        email = self.email_var.get()
         password = self.password_var.get()
-        data = {"username": username, "password": password}
+        data = {"email": email, "password": password}
 
         response = requests.post(f"{BASE_URL}/login", json=data)
 
@@ -46,6 +46,7 @@ class LoginFrame(ttk.Frame):
             MainFrame.jwt_token = self.jwt_token
             frame = MainFrame(self.master)
             frame.update_balances()
+            frame.update_messages()
             self.pack_forget()
             frame.pack(fill="both", expand=1)
         else:

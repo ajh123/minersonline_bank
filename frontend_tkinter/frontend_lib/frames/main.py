@@ -24,7 +24,6 @@ class MainFrame(ttk.Frame):
         ttk.Entry(transaction_frame, textvariable=self.amount_var).grid(row=1, column=1, padx=5, pady=5)
 
         ttk.Button(transaction_frame, text="Make Transaction", command=self.make_transaction).grid(row=2, column=0, columnspan=2, pady=10)
-        transaction_frame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
 
         # Balances Frame
         balances_frame = ttk.LabelFrame(self, text="Balances")
@@ -32,7 +31,6 @@ class MainFrame(ttk.Frame):
 
         self.balances_listbox = tk.Listbox(balances_frame, width=30, height=5)
         self.balances_listbox.grid(row=0, column=0, padx=5, pady=5)
-        balances_frame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
 
         # Messages Frame
         messages_frame = ttk.LabelFrame(self, text="Messages")
@@ -40,7 +38,6 @@ class MainFrame(ttk.Frame):
 
         self.messages_listbox = tk.Listbox(messages_frame, width=60, height=10)
         self.messages_listbox.grid(row=0, column=0, padx=5, pady=5)
-        messages_frame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
 
     def make_transaction(self):
         if not MainFrame.jwt_token:
@@ -49,7 +46,8 @@ class MainFrame(ttk.Frame):
 
         to_account = self.to_var.get()
         amount = float(self.amount_var.get())
-        data = {"to": to_account, "amount": amount, "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc"}
+        currency_id = tk.simpledialog.askstring("Currency", "Enter Currency ID:")
+        data = {"to": to_account, "amount": amount, "currency_id": currency_id}
 
         headers = {"Authorization": f"Bearer {MainFrame.jwt_token}"}
         response = requests.post(f"{BASE_URL}/transaction", json=data, headers=headers)
@@ -77,3 +75,20 @@ class MainFrame(ttk.Frame):
 
     def update_messages(self, message):
         self.messages_listbox.insert(tk.END, message)
+
+    def update_messages(self):
+        if not MainFrame.jwt_token:
+            self.messages_listbox.insert(tk.END, "User not logged in.")
+            return
+
+        headers = {"Authorization": f"Bearer {MainFrame.jwt_token}"}
+        response = requests.get(f"{BASE_URL}/messages", headers=headers)
+
+        if response.status_code == 200:
+            messages = response.json().get("messages", [])
+            self.messages_listbox.delete(0, tk.END)
+
+            for message in messages:
+                self.messages_listbox.insert(tk.END, f"{message['from']}: {message['data']}")
+        else:
+            self.messages_listbox.insert(tk.END, "Failed to retrieve messages.")
