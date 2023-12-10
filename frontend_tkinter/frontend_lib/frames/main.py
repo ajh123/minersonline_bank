@@ -50,7 +50,7 @@ class MainFrame(ttk.Frame):
         data = {"to": to_account, "amount": amount, "currency_id": currency_id}
 
         headers = {"Authorization": f"Bearer {MainFrame.jwt_token}"}
-        response = requests.post(f"{BASE_URL}/transaction", json=data, headers=headers)
+        response = requests.post(f"{BASE_URL}/user/transaction", json=data, headers=headers)
 
         if response.status_code == 200:
             self.update_balances()
@@ -64,7 +64,7 @@ class MainFrame(ttk.Frame):
             return
 
         headers = {"Authorization": f"Bearer {MainFrame.jwt_token}"}
-        response = requests.get(f"{BASE_URL}/balance", headers=headers)
+        response = requests.get(f"{BASE_URL}/user/balance", headers=headers)
 
         if response.status_code == 200:
             balances = response.json().get("balances", [])
@@ -82,7 +82,7 @@ class MainFrame(ttk.Frame):
             return
 
         headers = {"Authorization": f"Bearer {MainFrame.jwt_token}"}
-        response = requests.get(f"{BASE_URL}/messages", headers=headers)
+        response = requests.get(f"{BASE_URL}/user/messages", headers=headers)
 
         if response.status_code == 200:
             messages = response.json().get("messages", [])

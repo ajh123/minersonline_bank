@@ -43,6 +43,24 @@ class DataEngine:
                 return currency
         return None
 
+    def find_currencies(self) -> List[Currency]:
+        currencies = []
+        for currency in self.data_model.currencies:
+            currencies.append(currency)
+        return currencies
+
+    def find_bank_by_id(self, bank_id: str) -> Bank | None:
+        for bank in self.data_model.banks:
+            if bank.bank_id == bank_id:
+                return bank
+        return None
+
+    def find_banks(self) -> List[Bank]:
+        banks = []
+        for bank in self.data_model.banks:
+            banks.append(bank)
+        return banks
+
     def add_message(self, user_id: str, message_data: str):
         user_accounts = self.find_user_accounts(user_id)
         if user_accounts:

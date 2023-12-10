@@ -40,7 +40,17 @@ def authenticate_user():
         return user_id
     return None
 
-@app.route("/login", methods=["POST"])
+@app.route("/info/banks", methods=["POST"])
+def banks():
+    banksL = data_engine.find_banks()
+    return jsonify({"banks": banksL}), 401
+
+@app.route("/info/currencies", methods=["POST"])
+def currencies():
+    currenciesL = data_engine.find_currencies()
+    return jsonify({"currencies": currenciesL}), 401
+
+@app.route("/user/login", methods=["POST"])
 def login():
     data = request.get_json()
 
@@ -52,7 +62,7 @@ def login():
 
     return jsonify({"error": "Invalid credentials"}), 401
 
-@app.route("/balance")
+@app.route("/user/balance")
 def view_balance():
     user_id = authenticate_user()
     if user_id:
@@ -64,7 +74,7 @@ def view_balance():
             return jsonify({"balances": balances})
     return jsonify({"error": "User not authenticated"}), 401
 
-@app.route("/transaction", methods=["POST"])
+@app.route("/user/transaction", methods=["POST"])
 def make_transaction():
     user_id = authenticate_user()
     if user_id:
@@ -137,7 +147,7 @@ def make_transaction():
 
     return jsonify({"error": "User not authenticated"}), 401
 
-@app.route("/messages")
+@app.route("/user/messages")
 def view_messages():
     user_id = authenticate_user()
     if user_id:

@@ -38,7 +38,7 @@ class LoginFrame(ttk.Frame):
         password = self.password_var.get()
         data = {"email": email, "password": password}
 
-        response = requests.post(f"{BASE_URL}/login", json=data)
+        response = requests.post(f"{BASE_URL}/user/login", json=data)
 
         if response.status_code == 200:
             LoginFrame.jwt_token = response.json().get("jwt_token")  # Store JWT token in class variable
