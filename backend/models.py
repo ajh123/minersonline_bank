@@ -31,6 +31,7 @@ class OwnerType:
             "owner_id": self.owner_id
         }
 
+
 class Message:
     def __init__(self, owner: OwnerType, data: str):
         self.owner = owner
@@ -45,6 +46,7 @@ class Message:
             "owner": self.owner.to_json(),
             "data": self.data
         }
+
 
 class Authentication:
     def __init__(self, auth_type: str, data: Union[int, dict, None] = None):
@@ -61,26 +63,30 @@ class Authentication:
             "data": self.data
         }
 
+
 class Currency:
-    def __init__(self, currency_id: str, name: str, symbol: str, bank_id: str, created_at: str):
+    def __init__(self, currency_id: str, name: str, code: str, symbol: str, bank_id: str, created_at: str):
         self.currency_id = currency_id
         self.name = name
+        self.code = code
         self.symbol = symbol
         self.bank_id = bank_id
         self.created_at = created_at
 
     @classmethod
     def from_json(cls, data):
-        return cls(data["currency_id"], data["name"], data["symbol"], data["bank_id"], data["created_at"])
+        return cls(data["currency_id"], data["name"], data["code"], data["symbol"], data["bank_id"], data["created_at"])
 
     def to_json(self):
         return {
             "currency_id": self.currency_id,
             "name": self.name,
+            "code": self.code,
             "symbol": self.symbol,
             "bank_id": self.bank_id,
             "created_at": self.created_at
         }
+
 
 class Transaction:
     def __init__(self, from_id: str, to_id: str, when: str, currency_id: str, previous_balance: float, new_balance: float):
@@ -111,6 +117,7 @@ class Transaction:
             }
         }
 
+
 class User:
     def __init__(self, user_id: str, name: str, email: str, password: str, created_at: str):
         self.user_id = user_id
@@ -132,6 +139,7 @@ class User:
             "created_at": self.created_at
         }
 
+
 class BankAdminAuthentication:
     def __init__(self, user_id: str, permissions: List[str]):
         self.user_id = user_id
@@ -146,6 +154,7 @@ class BankAdminAuthentication:
             "user_id": self.user_id,
             "permissions": self.permissions
         }
+
 
 class Account:
     def __init__(self, account_id: str, bank_id: str, type_id: str, owner: OwnerType, created_at: str, balance: List[Balance], messages: List[Message], transactions: List[Transaction], authentication: List[Authentication]):
@@ -194,6 +203,7 @@ class Account:
             "authentication": [a.to_json() for a in self.authentication]
         }
 
+
 class AccountType:
     def __init__(self, type_id: str, name: str, description: str):
         self.type_id = type_id
@@ -210,6 +220,7 @@ class AccountType:
             "name": self.name,
             "description": self.description
         }
+
 
 class Bank:
     def __init__(self, bank_id: str, name: str, bank_type: str, created_at: str, account_types: List[AccountType], admin_authentication: List[BankAdminAuthentication], accounts: List[Account]):
@@ -247,6 +258,7 @@ class Bank:
             "admin_authentication": [a.to_json() for a in self.admin_authentication],
             "accounts": [a.to_json() for a in self.accounts]
         }
+
 
 class DataModel:
     def __init__(self, currencies: List[Currency], users: List[User], banks: List[Bank]):

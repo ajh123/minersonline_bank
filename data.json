@@ -3,6 +3,7 @@
         {
             "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
             "name": "Samland Sammers",
+            "code": "ZLS",
             "symbol": "§",
             "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
             "created_at": "2023-12-09 13:46:59.591897"
