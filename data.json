@@ -1,102 +1,26 @@
 {
-    "accounts": [
-        {
-            "account_id": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
-            "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
-            "type_id": "b8fdaa52-927e-4536-a96e-53ad7b1513a6",
-            "name": "bob",
-            "created_at": "2023-12-09 13:46:59.591897",
-            "balance": [
-                {
-                    "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
-                    "balance": 3424234323.22
-                }
-            ],
-            "messages": [
-                {
-                    "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
-                    "data": "hello world!"
-                }
-            ],
-            "transactions": [
-                {
-                    "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
-                    "to": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
-                    "when": "2023-12-09 13:46:59.591897",
-                    "currency": {
-                        "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
-                        "previous_balance": 0,
-                        "new_balance": 3424234323.22
-                    }
-                }
-            ],
-            "authentication": [
-                {
-                    "type": "pin",
-                    "data": 1234
-                },
-                {
-                    "type": "online_account",
-                    "data": {
-                        "username": "bobIsTheBest",
-                        "password": "Go@w@y_1234!"
-                    }
-                }
-            ]
-        },
-        {
-            "account_id": "f23b57bf-78ed-4538-80df-ffd089a27223",
-            "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
-            "type_id": "b5ee27ad-aa3a-4633-bf41-f2785538db56",
-            "name": "Samland Bank",
-            "created_at": "2023-12-09 13:46:59.591897",
-            "balance": [
-                {
-                    "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
-                    "balance": 9999999999.99
-                }
-            ],
-            "messages": [
-                {
-                    "from": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
-                    "data": "hello my bank!"
-                }
-            ],
-            "transactions": [
-                {
-                    "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
-                    "to": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
-                    "when": "2023-12-09 13:46:59.591897",
-                    "currency": {
-                        "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
-                        "previous_balance": 13424234323.21,
-                        "new_balance": 9999999999.99
-                    }
-                },
-                {
-                    "from": "Unknown",
-                    "to": "f23b57bf-78ed-4538-80df-ffd089a27223",
-                    "when": "2023-12-09 13:46:59.591897",
-                    "currency": {
-                        "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
-                        "previous_balance": 0,
-                        "new_balance": 13424234323.21
-                    }
-                }
-            ],
-            "authentication": [
-                {
-                    "type": "admins_only"
-                }
-            ]
-        }
-    ],
     "currencies": [
         {
             "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
             "name": "Samland Sammers",
             "symbol": "§",
             "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
+            "created_at": "2023-12-09 13:46:59.591897"
+        }
+    ],
+    "users": [
+        {
+            "user_id": "5e9b3f65-4a3a-48df-8693-6e47de80f1f3",
+            "name": "bobIsTheBest",
+            "email": "boby@example.com",
+            "password": "Go@w@y_1234!",
+            "created_at": "2023-12-09 13:46:59.591897"
+        },
+        {
+            "user_id": "41e92945-d57c-4083-986b-7345a3a42904",
+            "name": "Samuel Hulme",
+            "email": "shulme@example.com",
+            "password": "Go@w@y_qwertyu12344!-=",
             "created_at": "2023-12-09 13:46:59.591897"
         }
     ],
@@ -120,10 +44,97 @@
             ],
             "admin_authentication": [
                 {
-                    "name": "Samuel Hulme",
+                    "user_id": "41e92945-d57c-4083-986b-7345a3a42904",
+                    "permissions": [
+                        "*"
+                    ]
+                }
+            ],
+            "accounts": [
+                {
+                    "account_id": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
+                    "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
+                    "type_id": "b8fdaa52-927e-4536-a96e-53ad7b1513a6",
+                    "owner": {
+                        "type": "user",
+                        "owner_id": "5e9b3f65-4a3a-48df-8693-6e47de80f1f3"
+                    },
                     "created_at": "2023-12-09 13:46:59.591897",
-                    "username": "shulmme",
-                    "password": "Go@w@y_qwertyu12344!-="
+                    "balance": [
+                        {
+                            "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
+                            "balance": 3424234323.22
+                        }
+                    ],
+                    "messages": [
+                        {
+                            "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                            "data": "hello world!"
+                        }
+                    ],
+                    "transactions": [
+                        {
+                            "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                            "to": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
+                            "when": "2023-12-09 13:46:59.591897",
+                            "currency": {
+                                "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
+                                "previous_balance": 0,
+                                "new_balance": 3424234323.22
+                            }
+                        }
+                    ],
+                    "authentication": [
+                        {
+                            "type": "pin",
+                            "data": 1234
+                        }
+                    ]
+                },
+                {
+                    "account_id": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                    "bank_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36",
+                    "type_id": "b5ee27ad-aa3a-4633-bf41-f2785538db56",
+                    "owner": {
+                        "type": "bank",
+                        "owner_id": "123372f1-2e9b-4cd0-9197-4a8214a8fe36"
+                    },
+                    "created_at": "2023-12-09 13:46:59.591897",
+                    "balance": [
+                        {
+                            "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
+                            "balance": 9999999999.99
+                        }
+                    ],
+                    "messages": [
+                        {
+                            "from": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
+                            "data": "hello my bank!"
+                        }
+                    ],
+                    "transactions": [
+                        {
+                            "from": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                            "to": "f0b53f86-7988-4b27-aad9-ccb4c6752b13",
+                            "when": "2023-12-09 13:46:59.591897",
+                            "currency": {
+                                "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
+                                "previous_balance": 13424234323.21,
+                                "new_balance": 9999999999.99
+                            }
+                        },
+                        {
+                            "from": "Unknown",
+                            "to": "f23b57bf-78ed-4538-80df-ffd089a27223",
+                            "when": "2023-12-09 13:46:59.591897",
+                            "currency": {
+                                "currency_id": "c686341a-c073-4174-bbec-7df211ed07fc",
+                                "previous_balance": 0,
+                                "new_balance": 13424234323.21
+                            }
+                        }
+                    ],
+                    "authentication": null
                 }
             ]
         }
