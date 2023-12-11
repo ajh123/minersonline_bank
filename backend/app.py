@@ -56,8 +56,7 @@ def login():
 
     user = data_engine.find_user(email=data["email"])
     if user and data["password"] == user.password:
-        user_id = user.user_id
-        jwt_token = generate_jwt_token(user_id)
+        jwt_token = generate_jwt_token(user.user_id)
         return jsonify({"message": "Login successful", "jwt_token": jwt_token}), 200
 
     return jsonify({"error": "Invalid credentials"}), 401
@@ -70,8 +69,13 @@ def view_balance():
         if user_accounts:
             balances = []
             for account in user_accounts:
-                balances.extend([{"account_id": account.account_id, "currency_id": balance.currency_id, "balance": balance.balance} for balance in account.balance])
+                balances.extend([{
+                    "account_id": account.account_id,
+                    "currency_id": balance.currency_id,
+                    "balance": balance.balance
+                } for balance in account.balance])
             return jsonify({"balances": balances})
+        return jsonify({"error": "User does not have any accounts"}), 400
     return jsonify({"error": "User not authenticated"}), 401
 
 @app.route("/user/transaction", methods=["POST"])
@@ -111,7 +115,7 @@ def make_transaction():
         new_sender_balance = sender_balance - data["amount"]
         recipient_balance = next((balance.balance for balance in recipient_account.balance if balance.currency_id == currency), None)
         if not recipient_balance:
-            return jsonify({"error": "Invalid recipient balance data"}), 500
+            return jsonify({"error": "Recipient cannot have the chosen currency"}), 500
 
         new_recipient_balance = recipient_balance + data["amount"]
 
